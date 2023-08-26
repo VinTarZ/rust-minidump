@@ -600,7 +600,7 @@ where
     }
 }
 
-#[tracing::instrument(name = "unwind_frame", level = "trace", skip_all, fields(idx = _frame_idx, fname = callee_frame.function_name.as_deref().unwrap_or("")))]
+#[cfg_attr(debug_assertions, tracing::instrument(name = "unwind_frame", level = "trace", skip_all, fields(idx = _frame_idx, fname = callee_frame.function_name.as_deref().unwrap_or(""))))]
 async fn get_caller_frame<P>(
     _frame_idx: usize,
     callee_frame: &StackFrame,
@@ -736,7 +736,7 @@ impl<'a, F: FnMut(usize, &StackFrame) + Send + 'a> From<F> for OnWalkedFrame<'a>
     }
 }
 
-#[tracing::instrument(name = "unwind_thread", level = "trace", skip_all, fields(tid = stack.thread_id, tname = stack.thread_name.as_deref().unwrap_or("")))]
+#[cfg_attr(debug_assertions, tracing::instrument(name = "unwind_thread", level = "trace", skip_all, fields(tid = stack.thread_id, tname = stack.thread_name.as_deref().unwrap_or(""))))]
 pub async fn walk_stack<P>(
     on_walked_frame: impl Into<OnWalkedFrame<'_>>,
     stack: &mut CallStack,

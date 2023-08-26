@@ -373,7 +373,7 @@ impl SimpleSymbolSupplier {
 
 #[async_trait]
 impl SymbolSupplier for SimpleSymbolSupplier {
-    #[tracing::instrument(name = "symbols", level = "trace", skip_all, fields(module = crate::basename(&module.code_file())))]
+    #[cfg_attr(debug_assertions, tracing::instrument(name = "symbols", level = "trace", skip_all, fields(module = crate::basename(&module.code_file()))))]
     async fn locate_symbols(
         &self,
         module: &(dyn Module + Sync),
@@ -390,7 +390,7 @@ impl SymbolSupplier for SimpleSymbolSupplier {
         Ok(symbols)
     }
 
-    #[tracing::instrument(level = "trace", skip(self, module), fields(module = crate::basename(&module.code_file())))]
+    #[cfg_attr(debug_assertions, tracing::instrument(level = "trace", skip(self, module), fields(module = crate::basename(&module.code_file()))))]
     async fn locate_file(
         &self,
         module: &(dyn Module + Sync),
@@ -429,7 +429,7 @@ impl StringSymbolSupplier {
 
 #[async_trait]
 impl SymbolSupplier for StringSymbolSupplier {
-    #[tracing::instrument(name = "symbols", level = "trace", skip_all, fields(file = crate::basename(&module.code_file())))]
+    #[cfg_attr(debug_assertions, tracing::instrument(name = "symbols", level = "trace", skip_all, fields(file = crate::basename(&module.code_file()))))]
     async fn locate_symbols(
         &self,
         module: &(dyn Module + Sync),

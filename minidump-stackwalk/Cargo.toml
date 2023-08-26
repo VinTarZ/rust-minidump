@@ -28,7 +28,7 @@ minidump-common = { version = "0.17.0", path = "../minidump-common" }
 minidump-processor = { version = "0.17.0", path = "../minidump-processor" }
 minidump-unwind = { version = "0.17.0", path = "../minidump-unwind", features = ["debuginfo", "http"] }
 tokio = { version = "1.12.0", features = ["full"] }
-tracing = { version = "0.1.34", features = ["log"] }
+tracing = { version = "0.1.34", features = ["log", "release_max_level_off"] }
 tracing-subscriber = "0.3.14"
 
 [dev-dependencies]
