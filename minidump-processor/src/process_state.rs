@@ -593,7 +593,7 @@ Loaded modules:
                 "{:#010x} - {:#010x}  {}  {}",
                 module.base_address(),
                 module.base_address() + module.size() - 1,
-                name,
+                full_name,
                 module.version().unwrap_or(Cow::Borrowed("???"))
             )?;
             if eq_some(main_address, module.base_address()) {
@@ -618,7 +618,7 @@ Unloaded modules:
                 "{:#010x} - {:#010x}  {}",
                 module.base_address(),
                 module.base_address() + module.size() - 1,
-                basename(&module.code_file()),
+                full_name,
             )?;
             if let Some(cert) = self.cert_info.get(name) {
                 write!(f, " ({cert})")?;
@@ -776,6 +776,7 @@ Unknown streams encountered:
                     // [[:xdigit:]]{33} | empty string
                     "debug_id": module.debug_identifier().unwrap_or_default().breakpad().to_string(),
                     "end_addr": json_hex(module.raw.base_of_image + module.raw.size_of_image as u64),
+                    "full_name": &full_name,
                     "filename": &name,
                     "code_id": module.code_identifier().unwrap_or_default().as_str(),
                     "version": module.version(),
